@@ -1,0 +1,24 @@
+{
+  "name": "class-memo",
+  "version": "v1.1",
+  "description": "高一(11)班 在线备忘录 — Powered By CBs2N",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js",
+    "init-accounts": "node seed.js --init",
+    "reset-admin": "node seed.js --reset-admin"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.2",
+    "pinyin-pro": "^3.26.0",
+    "pngjs": "^7.0.0",
+    "sanitize-html": "^2.14.0",
+    "ws": "^8.18.0"
+  }
+}

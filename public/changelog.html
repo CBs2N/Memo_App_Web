@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>更新日志 · 备忘录</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>try{if(localStorage.getItem('cb2n-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+  <style>
+    .log { max-width: 780px; margin: 0 auto; padding: 24px; line-height: 1.85; }
+    .log h2 {
+      margin-top: 30px; font-size: 22px;
+      border-left: 4px solid var(--primary); padding-left: 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .log .ver-date { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .log .tag-new { background: #eafaf1; color: var(--ok); border: 1px solid #bdebd3; }
+    .log ul { padding-left: 22px; }
+    .log li { margin-bottom: 4px; }
+    .log b { color: var(--primary); }
+    .log .current { color: var(--ok); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand"><a href="/" style="color:inherit">← 返回主页</a></div>
+    <div class="title">更新日志</div>
+    <div class="auth-area"></div>
+  </header>
+
+  <main class="log">
+    <h2>v1.1 <span class="ver-date">2026-09-05 · 当前版本</span></h2>
+    <ul>
+      <li><b>「我的」页支持修改登录账号</b>：真实姓名不可改，可改登录账号（改后需用新账号重新登录）。</li>
+      <li><b>公告过期自动删除</b>：不再保留隐藏记录。</li>
+      <li><b>操作日志操作人显示姓名</b>：后台日志可见真实姓名而非账号。</li>
+      <li>学期进度百分比精确到两位小数；作业统计不再显示字数。</li>
+      <li><b>倒计时移至主页</b>：主页顺序为 大标题 → 公告 → 倒计时 → 功能入口。</li>
+      <li>后台入口更名「后台管理」；各子页返回统一在左上角。</li>
+      <li>首次登录说明精简。</li>
+    </ul>
+
+    <h2>v1.0 <span class="tag tag-new">重大改版</span> <span class="ver-date">2026-09-05</span></h2>
+    <ul>
+      <li><b>主页改为班级门户</b>：不再是备忘录，而是"高一（11）班"大标题 + 功能入口。</li>
+      <li><b>备忘录独立成页</b>：主页「备忘录」按钮进入 /memo.html。</li>
+      <li><b>班级公告移到主页</b>：主页下方集中展示公告。</li>
+      <li><b>用户管理移到主页</b>：管理员/超管可见的入口卡片（进后台）。</li>
+      <li><b>新增「我的」页</b>：所有人可查看账号信息、<b>修改显示姓名</b>、修改密码。</li>
+      <li><b>使用说明/更新日志移到主页</b>，并有独立入口。</li>
+      <li><b>使用说明按功能分类</b>：账号 / 备忘录 / 班级门户 / 我的 / 个人小工具 / 后台管理 分节，可点目录跳转。</li>
+    </ul>
+
+    <h2>b1.0 <span class="ver-date">2026-09-05</span></h2>
+    <ul>
+      <li><b>PWA</b>：手机可"添加到主屏幕"当 App 使用（全屏、图标、离线基础可用）。</li>
+      <li><b>班级公告栏</b>：主页顶部公告条，管理员在后台「公告管理」发布/删除，可设过期日期，实时同步。</li>
+      <li><b>倒计时卡片</b>：主页显示考试/放假等倒计时，后台「倒计时」可开关与配置，过期自动隐藏。</li>
+      <li><b>作业统计</b>：独立统计页（主页右上「📊 统计」），各科作业量条形图 + 记录情况表，所有人可看。</li>
+      <li><b>班主任职位</b>：新增"班主任"（超级管理员，限 1 人）。</li>
+      <li><b>今日默认显示</b>：管理员可指定今天打开网站默认显示的备忘录日期，仅当天生效，次日自动恢复。</li>
+      <li><b>更新日志</b>：本页面（使用指南右侧入口）。</li>
+    </ul>
+
+    <h2>a1.0 <span class="ver-date">2026-09-04</span></h2>
+    <ul>
+      <li>版本号统一为 <b>a1.0</b>，页脚不再显示 "v" 前缀。</li>
+      <li><b>日期规则统一</b>：每天 8 点前显示昨天、8 点后显示当天（周末与工作日一致）。</li>
+      <li>"昨日备忘录"标记只加在恰好为昨天的日期，更早的历史不再标注。</li>
+      <li><b>学期进度</b>：主页显示"今天是 xxxx学年第x周第x天（合第x天）· 本学期共 x 天 · 进度 x%"，超管在后台「学期设置」维护（开学日/学年最后一天）。</li>
+      <li>主页排版调整：问候语与日期选择同一行，日期大字居中显示。</li>
+      <li>各科课代表限额由 1 人增至 <b>2 人</b>。</li>
+      <li>学期设置中"放假日"更名为"<b>学年最后一天</b>"。</li>
+    </ul>
+
+    <h2>a26.9.3 <span class="ver-date">2026-09-04 · 首个版本</span></h2>
+    <ul>
+      <li>12 学科作业卡片（一行三个），单击进入详情（居中放大、背景模糊）。</li>
+      <li>富文本编辑：文字颜色、文字高亮、1.~5. 序号快捷按钮、最近编辑时间与编辑人。</li>
+      <li>日期归档：8 点自动切换新一天，历史可按日期查看、前后翻页。</li>
+      <li>账号体系：拼音首字母+学号自动生成、随机初始密码、首次登录选职位并设密码。</li>
+      <li>三级权限：超级管理员 / 管理员 / 普通用户；职位限额（班长 2、其余 1）；权限不足有明确提示。</li>
+      <li>后台管理：用户列表、创建用户、设置权限、重置账号、操作日志（超管）。</li>
+      <li>WebSocket 实时同步：有人保存作业时其他页面提示刷新。</li>
+      <li>个人完成打勾 + 今日进度条（仅存本机浏览器）。</li>
+      <li>修改密码（改后其他设备下线）、深色模式、问候语、学科图标、背景光斑动效。</li>
+    </ul>
+  </main>
+
+  <footer class="footer">
+    <div></div>
+    <div class="power">Powered By CBs2N · <span id="ver"></span></div>
+    <div></div>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script>
+    ensureThemeUI();
+    document.getElementById('ver').textContent = App.VERSION;
+  </script>
+</body>
+</html>

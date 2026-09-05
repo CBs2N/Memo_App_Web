@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>备忘录 · 高一（11）班</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="备忘录">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>try{if(localStorage.getItem('cb2n-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <!-- 顶部栏 -->
+  <header class="header">
+    <div class="brand"><a href="/" style="color:inherit">← 返回主页</a></div>
+    <div class="title">备忘录</div>
+    <div class="auth-area" id="authArea"></div>
+  </header>
+
+  <main class="main">
+    <!-- 顶部工具行：问候语在左，日期选择/统计在右 -->
+    <div class="top-row">
+      <div class="top-left">
+        <span class="greet-pill" id="greetPill">👋 你好</span>
+        <span class="progress-pill" id="progressPill" hidden></span>
+      </div>
+      <div class="top-right">
+        <a class="btn-ghost btn" href="/stats.html" title="作业量统计">📊 统计</a>
+        <button class="btn-ghost btn" id="backTodayBtn" hidden>返回今天</button>
+        <input type="date" id="datePicker" title="选择日期查看历史备忘录">
+      </div>
+    </div>
+
+    <!-- 日期大字：居中 -->
+    <div class="date-hero">
+      <div class="date-nav">
+        <button class="nav-btn" id="prevDay" title="前一天">‹</button>
+        <div class="date-big" id="dateLabel">加载中…</div>
+        <button class="nav-btn" id="nextDay" title="后一天">›</button>
+      </div>
+      <!-- 学期信息 -->
+      <div class="term-line" id="termLine" hidden></div>
+    </div>
+
+    <!-- 今日默认显示提示条 -->
+    <div class="override-tip" id="overrideTip" hidden></div>
+
+    <!-- 学科卡片网格 -->
+    <div class="memo-grid" id="memoGrid"></div>
+
+    <!-- 更新提示横幅 -->
+    <div class="update-banner" id="updateBanner" hidden></div>
+  </main>
+
+  <!-- 底部 -->
+  <footer class="footer">
+    <div style="display:flex;gap:10px;justify-self:start;flex-wrap:wrap">
+      <a class="btn-ghost btn" href="/guide.html">使用说明</a>
+      <a class="btn-ghost btn" href="/changelog.html">更新日志</a>
+    </div>
+    <div class="power">Powered By CBs2N · <span id="version"></span></div>
+    <div></div>
+  </footer>
+
+  <!-- 详情模态 -->
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title" id="modalTitle">学科</div>
+        <button class="modal-close" id="modalClose" title="关闭">×</button>
+      </div>
+
+      <!-- 编辑工具栏（编辑模式显示） -->
+      <div class="editor-toolbar" id="editorToolbar" hidden>
+        <div class="group">
+          <label>文字颜色</label>
+          <div class="swatches" id="colorSwatches"></div>
+          <input type="color" id="colorPicker" title="自定义颜色" style="width:30px;height:24px;border:none;background:none;">
+        </div>
+        <div class="tool-divider"></div>
+        <div class="group">
+          <label>高亮</label>
+          <div class="swatches" id="hlSwatches"></div>
+          <input type="color" id="hlPicker" title="自定义高亮" style="width:30px;height:24px;border:none;background:none;">
+        </div>
+        <div class="tool-divider"></div>
+        <div class="group">
+          <label>序号</label>
+          <button class="sn-btn" data-sn="1. ">1.</button>
+          <button class="sn-btn" data-sn="2. ">2.</button>
+          <button class="sn-btn" data-sn="3. ">3.</button>
+          <button class="sn-btn" data-sn="4. ">4.</button>
+          <button class="sn-btn" data-sn="5. ">5.</button>
+        </div>
+      </div>
+
+      <div class="modal-body" id="modalBody">
+        <div class="memo-view" id="memoView"></div>
+      </div>
+
+      <div class="modal-foot">
+        <div class="modal-meta" id="modalMeta">最近编辑：—</div>
+        <div class="modal-actions">
+          <button class="btn" id="editBtn">编辑</button>
+          <button class="btn btn-primary" id="saveBtn" hidden>保存</button>
+          <button class="btn-ghost btn" id="cancelBtn" hidden>取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/sync.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

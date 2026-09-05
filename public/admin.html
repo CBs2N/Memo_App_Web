@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>后台管理</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="备忘录">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <header class="header">
+    <div class="brand"><a href="/" style="color:inherit">← 返回主页</a></div>
+    <div class="title">后台管理</div>
+    <div class="auth-area"></div>
+  </header>
+
+  <main class="main">
+    <div id="permTip" class="alert" hidden></div>
+
+    <!-- Tab 切换 -->
+    <div class="tabs" id="adminTabs">
+      <button class="tab active" data-tab="users">用户管理</button>
+      <button class="tab" data-tab="notice" id="tabNoticeBtn">公告管理</button>
+      <button class="tab" data-tab="countdown" id="tabCountdownBtn">倒计时</button>
+      <button class="tab" data-tab="term" id="tabTermBtn">学期设置</button>
+      <button class="tab" data-tab="override" id="tabOverrideBtn">默认显示</button>
+      <button class="tab" data-tab="logs" id="tabLogsBtn">操作日志</button>
+    </div>
+
+    <!-- 用户管理 -->
+    <div class="tab-pane" id="pane-users">
+      <div class="section-title-row">
+        <div class="section-title" style="margin:0">用户管理</div>
+        <button class="btn btn-primary" id="createBtn">＋ 创建用户</button>
+      </div>
+      <div style="overflow:auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>姓名</th><th>账号</th><th>学号</th><th>职位</th>
+              <th>角色</th><th>状态</th><th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="userTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 学期设置 -->
+    <div class="tab-pane" id="pane-term" hidden>
+      <div class="section-title" style="margin-bottom:16px">学期设置</div>
+      <div class="panel narrow">
+        <div class="alert info">设置学年与学期起止日期，主页将据此显示"今天是 xxxx学年第x周第x天（合x天）· 本学期共 x 天 · 进度 x%"。开学日为第 1 周第 1 天。</div>
+        <div class="field">
+          <label>学年标签</label>
+          <input id="termYear" placeholder="如：2026">
+        </div>
+        <div class="field">
+          <label>开学日（第1周第1天）</label>
+          <input type="date" id="termStart">
+        </div>
+        <div class="field">
+          <label>学年最后一天</label>
+          <input type="date" id="termEnd">
+        </div>
+        <button class="btn-primary btn" id="termSave" style="width:100%">保存学期设置</button>
+        <div id="termMsg" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <!-- 公告管理 -->
+    <div class="tab-pane" id="pane-notice" hidden>
+      <div class="section-title" style="margin-bottom:16px">公告管理</div>
+      <div class="panel narrow">
+        <div class="alert info">公告显示在主页顶部横条，点击可查看详情。过期日期当天结束后自动隐藏（留空=永久显示）。</div>
+        <div class="field"><label>标题</label><input id="noticeTitle" placeholder="如：明天运动会，7:20 操场集合" maxlength="100"></div>
+        <div class="field"><label>内容（可选）</label><textarea id="noticeContent" rows="3" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:11px;font:inherit;font-size:15px;background:#fff;color:var(--text)" maxlength="2000" placeholder="补充说明…"></textarea></div>
+        <div class="field"><label>过期日期（可选，当天结束后隐藏）</label><input type="date" id="noticeExpires"></div>
+        <button class="btn-primary btn" id="noticePublish" style="width:100%">发布公告</button>
+      </div>
+      <div class="section-title" style="margin-top:24px">已发布公告</div>
+      <div id="noticeAdminList" style="max-width:640px"></div>
+    </div>
+
+    <!-- 倒计时设置 -->
+    <div class="tab-pane" id="pane-countdown" hidden>
+      <div class="section-title" style="margin-bottom:16px">倒计时设置</div>
+      <div class="panel narrow">
+        <div class="alert info">主页显示倒计时卡片（如"距期末考试 37 天"）。关闭开关后主页不显示卡片。日期当天显示"就是今天"，过后自动隐藏。最多 10 个。</div>
+        <div class="field" style="display:flex;align-items:center;gap:10px">
+          <input type="checkbox" id="cdEnabled" style="width:18px;height:18px">
+          <label for="cdEnabled" style="margin:0;font-size:15px;color:var(--text);font-weight:700">启用倒计时显示</label>
+        </div>
+        <div id="cdItems"></div>
+        <button class="btn btn-ghost" id="cdAdd" style="width:100%;margin-bottom:10px">＋ 添加一项</button>
+        <button class="btn-primary btn" id="cdSave" style="width:100%">保存倒计时</button>
+        <div id="cdMsg" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <!-- 今日默认显示 -->
+    <div class="tab-pane" id="pane-override" hidden>
+      <div class="section-title" style="margin-bottom:16px">今日默认显示</div>
+      <div class="panel narrow">
+        <div class="alert info">设置<b>今天</b>打开网站时默认显示的备忘录日期（仅限今天，第 2 天自动恢复默认规则）。适合提前把某天作业准备好、或临时指定全班看某天内容。</div>
+        <div class="field">
+          <label>今天默认显示的日期</label>
+          <input type="date" id="overrideDate">
+        </div>
+        <div class="field" style="margin-top:8px">
+          <button class="btn-primary btn" id="overrideSave" style="width:100%">设为今日默认</button>
+          <button class="btn-ghost btn" id="overrideClear" style="width:100%;margin-top:8px">清除设置（恢复默认规则）</button>
+        </div>
+        <div id="overrideMsg" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <!-- 操作日志 -->
+    <div class="tab-pane" id="pane-logs" hidden>
+      <div class="section-title">操作日志</div>
+      <div style="overflow:auto">
+        <table class="table">
+          <thead><tr><th>时间</th><th>操作人</th><th>动作</th><th>对象</th><th>详情</th></tr></thead>
+          <tbody id="logTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- 创建用户弹窗 -->
+  <div class="modal-backdrop" id="createModal" hidden>
+    <div class="modal" style="width:min(460px,100%)">
+      <div class="modal-head">
+        <div class="modal-title">创建用户</div>
+        <button class="modal-close" id="createClose">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="field"><label>姓名</label><input id="newName" placeholder="如：张小明"></div>
+        <div class="field"><label>学号</label><input id="newSid" placeholder="如：08"></div>
+        <div class="alert info">账号按"姓名拼音首字母+学号"自动生成，密码随机 8 位，创建后显示一次。</div>
+        <div id="createErr"></div>
+      </div>
+      <div class="modal-foot">
+        <div></div>
+        <button class="btn btn-primary" id="createSubmit">创建</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 设权限弹窗 -->
+  <div class="modal-backdrop" id="roleModal" hidden>
+    <div class="modal" style="width:min(460px,100%)">
+      <div class="modal-head">
+        <div class="modal-title">设置权限</div>
+        <button class="modal-close" id="roleClose">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="field"><label>用户</label><input id="roleUser" readonly></div>
+        <div class="field"><label>职位（决定角色等级）</label><select id="rolePosition"></select></div>
+        <div class="alert info" id="roleInfo"></div>
+        <div id="roleErr"></div>
+      </div>
+      <div class="modal-foot">
+        <div></div>
+        <button class="btn btn-primary" id="roleSubmit">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 结果展示弹窗（重置/创建共用） -->
+  <div class="modal-backdrop" id="pwdModal" hidden>
+    <div class="modal" style="width:min(440px,100%)">
+      <div class="modal-head">
+        <div class="modal-title" id="pwdTitle">操作完成</div>
+        <button class="modal-close" id="pwdClose">×</button>
+      </div>
+      <div class="modal-body">
+        <p id="pwdLead"></p>
+        <p>账号：<b id="pwdUser">—</b></p>
+        <p>密码：</p>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="pwdText" readonly style="flex:1;font-size:18px;font-family:monospace;padding:10px;border:1px solid var(--border);border-radius:8px">
+          <button class="btn" id="copyPwd">复制</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div></div>
+    <div class="power">Powered By CBs2N · <span id="version"></span></div>
+    <div></div>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的 · 高一（11）班</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>try{if(localStorage.getItem('cb2n-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <header class="header">
+    <div class="brand"><a href="/" style="color:inherit">← 返回主页</a></div>
+    <div class="title" style="font-size:18px">我的</div>
+    <div class="auth-area" id="authArea"></div>
+  </header>
+
+  <main class="main">
+    <div id="permMsg" hidden></div>
+    <div class="panel narrow" id="mePanel" hidden>
+      <!-- 账号信息 -->
+      <div class="me-card">
+        <div class="me-avatar" id="meAvatar">?</div>
+        <div>
+          <div class="me-name" id="meName">—</div>
+          <div class="me-meta" id="meMeta">账号：—</div>
+          <div class="me-meta" id="meRole">—</div>
+        </div>
+      </div>
+
+      <!-- 修改账号 -->
+      <div class="alert info" style="margin-top:18px">账号是登录用的，可自行修改；姓名是真实姓名，不可修改。改账号后需用新账号重新登录，其他设备将下线。</div>
+      <div class="section-title" style="margin:6px 0 12px">修改登录账号</div>
+      <div class="field">
+        <label>当前账号</label>
+        <input id="curUsername" readonly>
+      </div>
+      <div class="field">
+        <label>新账号（2~30 位小写字母/数字/下划线）</label>
+        <input id="usernameInput" maxlength="30" placeholder="输入新登录账号">
+      </div>
+      <button class="btn-primary btn" id="saveNameBtn" style="width:100%">保存新账号</button>
+      <div id="nameMsg"></div>
+
+      <div style="height:1px;background:var(--border);margin:22px 0"></div>
+
+      <!-- 修改密码 -->
+      <div class="section-title" style="margin:0 0 12px">修改密码</div>
+      <div class="field"><label>原密码</label><input id="oldPwd" type="password" autocomplete="current-password"></div>
+      <div class="field"><label>新密码（至少 6 位）</label><input id="newPwd" type="password" autocomplete="new-password"></div>
+      <div class="field"><label>确认新密码</label><input id="newPwd2" type="password" autocomplete="new-password"></div>
+      <button class="btn-primary btn" id="savePwdBtn" style="width:100%">确认修改</button>
+      <div id="pwdMsg"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div></div>
+    <div class="power">Powered By CBs2N · <span id="version"></span></div>
+    <div></div>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/me.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高一（11）班 · 班级门户</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%AB%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="备忘录">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>try{if(localStorage.getItem('cb2n-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <!-- 顶部栏：登录状态 -->
+  <header class="header">
+    <div class="brand">班级门户</div>
+    <div class="title" style="font-size:18px;letter-spacing:1px">高一（11）班</div>
+    <div class="auth-area" id="authArea"></div>
+  </header>
+
+  <main class="main home-main">
+    <!-- 班级大标题 -->
+    <div class="home-hero">
+      <div class="home-title">高一（11）班</div>
+      <div class="greet-pill" id="greetPill">👋 你好</div>
+      <div class="term-line" id="termLine" hidden></div>
+    </div>
+
+    <!-- 班级公告 -->
+    <div class="home-section-title">📢 班级公告</div>
+    <div id="homeNotices"><div class="notice-empty">暂无公告</div></div>
+
+    <!-- 倒计时 -->
+    <div class="countdown-row" id="homeCountdown" style="margin:18px 0 4px" hidden></div>
+
+    <!-- 功能入口 -->
+    <div class="home-section-title" style="margin-top:22px">🔧 功能入口</div>
+    <div class="home-grid" id="homeGrid">
+      <a class="home-card" href="/memo.html">
+        <span class="home-icon">📝</span>
+        <span class="home-name">备忘录</span>
+        <span class="home-desc">查看/记录每天作业</span>
+      </a>
+      <a class="home-card" href="/admin.html" id="cardAdmin" hidden>
+        <span class="home-icon">🛠️</span>
+        <span class="home-name">后台管理</span>
+        <span class="home-desc">用户 · 公告 · 倒计时 · 学期</span>
+      </a>
+      <a class="home-card" href="/me.html">
+        <span class="home-icon">👤</span>
+        <span class="home-name">我的</span>
+        <span class="home-desc">修改姓名 · 密码</span>
+      </a>
+      <a class="home-card" href="/guide.html">
+        <span class="home-icon">📖</span>
+        <span class="home-name">使用说明</span>
+        <span class="home-desc">各功能分类指南</span>
+      </a>
+      <a class="home-card" href="/changelog.html">
+        <span class="home-icon">📜</span>
+        <span class="home-name">更新日志</span>
+        <span class="home-desc">版本变更记录</span>
+      </a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div></div>
+    <div class="power">Powered By CBs2N · <span id="version"></span></div>
+    <div style="justify-self:end"><a class="btn-ghost btn" href="/finance.html">💰 收支 · 赞助</a></div>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/home.js"></script>
+</body>
+</html>

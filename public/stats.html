@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作业统计 · 备忘录</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>try{if(localStorage.getItem('cb2n-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <header class="header">
+    <div class="brand"><a href="/" style="color:inherit">← 返回主页</a></div>
+    <div class="title">作业统计</div>
+    <div class="auth-area"></div>
+  </header>
+
+  <main class="main">
+    <!-- 范围切换 -->
+    <div class="tabs" id="rangeTabs">
+      <button class="tab" data-days="7">最近 7 天</button>
+      <button class="tab active" data-days="30">最近 30 天</button>
+      <button class="tab" data-days="0">本学期全部</button>
+    </div>
+
+    <div id="statsWrap">
+      <div class="section-title" style="margin-top:0">各科作业量</div>
+      <div class="stats-note" id="rangeNote"></div>
+      <div id="barChart"></div>
+
+      <div class="section-title">记录情况（谁在记作业）</div>
+      <div style="overflow:auto">
+        <table class="table">
+          <thead><tr><th>学科</th><th>布置天数</th><th>编辑次数</th><th>最近编辑人</th><th>最近时间</th></tr></thead>
+          <tbody id="statsTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div></div>
+    <div class="power">Powered By CBs2N · <span id="version"></span></div>
+    <div></div>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script>
+    ensureThemeUI();
+    document.getElementById('version').textContent = App.VERSION;
+  </script>
+  <script src="/js/stats.js"></script>
+</body>
+</html>

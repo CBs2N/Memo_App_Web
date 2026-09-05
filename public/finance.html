@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>收支 · 赞助</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%B0%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>try{if(localStorage.getItem('cb2n-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+  <style>
+    .fin-wrap { max-width: 860px; margin: 0 auto; padding: 10px 4px 30px; }
+    .sum-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
+    .sum-card { background: var(--card); border:1px solid var(--border); border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow); text-align:center; }
+    .sum-card .lbl { font-size: 13px; color: var(--muted); }
+    .sum-card .val { font-size: 26px; font-weight: 800; margin-top: 4px; }
+    .sum-card.income .val { color: var(--ok); }
+    .sum-card.expense .val { color: var(--danger); }
+    .sum-card.balance .val { color: var(--primary); }
+    .chart-card { background: var(--card); border:1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); margin-bottom: 20px; }
+    .chart-card .tt { font-weight: 800; margin-bottom: 12px; }
+    .chart-bars { display: flex; align-items: flex-end; gap: 18px; height: 160px; padding-top: 6px; }
+    .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+    .chart-col .bar { width: 60%; border-radius: 6px 6px 0 0; min-height: 2px; transition: height .5s; }
+    .bar.inc { background: linear-gradient(180deg,#4cd98a,#2bb673); }
+    .bar.exp { background: linear-gradient(180deg,#ff8a97,#e74c5e); }
+    .chart-col .vl { font-size: 11px; font-weight: 700; color: var(--text); }
+    .chart-col .ml { font-size: 11px; color: var(--muted); }
+    .donate-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 20px; }
+    .donate-card { background: var(--card); border:1px solid var(--border); border-radius: 16px; padding: 20px; text-align:center; box-shadow: var(--shadow); }
+    .donate-card .dc-t { font-weight: 800; margin-bottom: 12px; }
+    .donate-card img { width: 200px; height: 200px; object-fit: contain; border-radius: 12px; border: 1px solid var(--border); background:#fff; }
+    .donate-note { text-align:center; color: var(--muted); font-size: 13px; margin-top: 16px; }
+    .donate-title { margin-top: 30px; }
+    html[data-theme="dark"] .donate-card img { border-color: #35405c; }
+    .add-form { background: #f7f9ff; border:1px solid var(--border); border-radius: 16px; padding: 16px 18px; margin-bottom: 18px; }
+    html[data-theme="dark"] .add-form { background:#1a2130; }
+    .add-form .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .add-form input, .add-form select { padding: 8px 10px; border:1px solid var(--border); border-radius:9px; font-size:14px; background:#fff; color:var(--text); }
+    .del-btn { padding: 3px 10px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <header class="header">
+    <div class="brand"><a href="/" style="color:inherit">← 返回主页</a></div>
+    <div class="title" style="font-size:18px">收支 · 赞助</div>
+    <div class="auth-area" id="authArea"></div>
+  </header>
+
+  <main class="main fin-wrap">
+    <div id="superOnly" hidden></div>
+
+    <!-- 汇总卡片 -->
+    <div class="sum-cards">
+      <div class="sum-card income"><div class="lbl">累计收入</div><div class="val" id="sumIncome">0</div></div>
+      <div class="sum-card expense"><div class="lbl">累计支出</div><div class="val" id="sumExpense">0</div></div>
+      <div class="sum-card balance"><div class="lbl">当前余额</div><div class="val" id="sumBalance">0</div></div>
+    </div>
+
+    <!-- 图表：近6个月收支 -->
+    <div class="chart-card">
+      <div class="tt">近 6 个月收支</div>
+      <div class="chart-bars" id="chartBars"></div>
+    </div>
+
+    <!-- 超管：添加记录 -->
+    <div class="add-form" id="addForm" hidden>
+      <div class="tt" style="font-weight:800;margin-bottom:10px">➕ 添加收支记录</div>
+      <div class="row">
+        <input type="date" id="finDate">
+        <select id="finType"><option value="income">收入</option><option value="expense">支出</option></select>
+        <input type="number" id="finAmount" placeholder="金额" min="0.01" step="0.01" style="width:110px">
+        <input type="text" id="finDesc" placeholder="备注（如：班费-买扫把）" style="flex:1;min-width:160px">
+        <button class="btn btn-primary" id="finAdd">添加</button>
+      </div>
+      <div id="finMsg" style="margin-top:8px"></div>
+    </div>
+
+    <!-- 记录表 -->
+    <div class="chart-card" style="padding:14px">
+      <div class="tt" style="margin-bottom:8px">📋 收支记录</div>
+      <div style="overflow:auto">
+        <table class="table">
+          <thead><tr><th>日期</th><th>类型</th><th>金额</th><th>备注</th><th>记录人</th><th style="width:50px"></th></tr></thead>
+          <tbody id="finTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 赞助收款码（部署者请将收款码图片放入 public/qr/，命名 wechat.png / alipay.jpg） -->
+    <div class="donate-title home-section-title">💛 赞助支持</div>
+    <div class="donate-cards">
+      <div class="donate-card">
+        <div class="dc-t">微信收款</div>
+        <img src="/qr/wechat.png" alt="微信收款码">
+      </div>
+      <div class="donate-card">
+        <div class="dc-t">支付宝收款</div>
+        <img src="/qr/alipay.jpg" alt="支付宝收款码">
+      </div>
+    </div>
+    <div class="donate-note">本站所有运营产生费用由站长及所得赞助支付，收支情况见上。感谢所有赞助成员。</div>
+  </main>
+
+  <footer class="footer">
+    <div></div>
+    <div class="power">Powered By CBs2N · <span id="version"></span></div>
+    <div></div>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/finance.js"></script>
+</body>
+</html>

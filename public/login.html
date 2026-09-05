@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 · 备忘录</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="备忘录">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <header class="header">
+    <div class="brand"><a href="/" style="color:inherit">← 返回主页</a></div>
+    <div class="title">登录</div>
+    <div class="auth-area"></div>
+  </header>
+
+  <div class="center-wrap">
+    <div class="panel">
+      <h1>登录</h1>
+      <div class="sub">高一（11）班 备忘录系统</div>
+      <div id="alert"></div>
+
+      <!-- 登录表单 -->
+      <div id="loginForm">
+        <div class="field">
+          <label>账号</label>
+          <input id="username" autocomplete="username" placeholder="姓名拼音首字母+学号">
+        </div>
+        <div class="field">
+          <label>密码</label>
+          <input id="password" type="password" autocomplete="current-password">
+        </div>
+        <button class="btn-primary btn" id="loginBtn">登录</button>
+      </div>
+
+      <!-- 首次登录：选职位 + 设密码 -->
+      <div id="setupForm" hidden>
+        <div class="alert info">
+          首次登录，请选择职位并设置新密码。<br>
+          选择职位后才能使用编辑功能。职位有名额限制，已被选满的职位不可选。
+        </div>
+        <div class="field">
+          <label>选择职位</label>
+          <select id="position"></select>
+        </div>
+        <div class="field">
+          <label>新密码（至少 6 位）</label>
+          <input id="newPwd" type="password" autocomplete="new-password">
+        </div>
+        <div class="field">
+          <label>确认新密码</label>
+          <input id="newPwd2" type="password" autocomplete="new-password">
+        </div>
+        <button class="btn-primary btn" id="setupBtn">确认并进入主页</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div></div>
+    <div class="power">Powered By CBs2N · <span id="version"></span></div>
+    <div></div>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+[
+  { "name": "张三", "studentId": "01" },
+  { "name": "李四", "studentId": "02" },
+  { "name": "王晓明", "studentId": "03" }
+]

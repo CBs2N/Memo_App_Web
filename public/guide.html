@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用说明 · 高一（11）班</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>try{if(localStorage.getItem('cb2n-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+  <style>
+    .guide { max-width: 840px; margin: 0 auto; padding: 24px; line-height: 1.85; }
+    .guide h2 { margin-top: 32px; border-left: 4px solid var(--primary); padding-left: 12px; font-size: 22px; }
+    .guide h3 { margin-top: 18px; }
+    .guide ul, .guide ol { padding-left: 22px; }
+    .guide code { background: #eef1f7; padding: 1px 6px; border-radius: 5px; font-size: 13px; }
+    .guide .note { background: #eef6ff; border: 1px solid #cfe0ff; border-radius: 10px; padding: 12px 16px; margin: 14px 0; }
+    .guide .toc { background: #f7f9ff; border: 1px solid var(--border); border-radius: 14px; padding: 18px 22px; margin-bottom: 8px; }
+    .guide .toc a { display: block; padding: 3px 0; color: var(--primary); }
+    html[data-theme="dark"] .guide code { background: #232c40; }
+    html[data-theme="dark"] .guide .note { background: #1c2a44; border-color: #2c4a7a; }
+    html[data-theme="dark"] .guide .toc { background: #1a2130; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand"><a href="/" style="color:inherit">← 返回主页</a></div>
+    <div class="title" style="font-size:18px">使用说明</div>
+    <div class="auth-area"><a class="btn-ghost btn" href="/changelog.html">更新日志</a></div>
+  </header>
+
+  <main class="guide">
+    <div class="toc">
+      <b>📋 目录</b>
+      <a href="#sec-login">一、账号与登录</a>
+      <a href="#sec-memo">二、备忘录</a>
+      <a href="#sec-home">三、班级门户（主页）</a>
+      <a href="#sec-me">四、我的</a>
+      <a href="#sec-personal">五、个人小工具</a>
+      <a href="#sec-admin">六、后台管理（管理员/超管）</a>
+      <a href="#sec-about">七、关于</a>
+    </div>
+
+    <h2 id="sec-login">一、账号与登录</h2>
+    <ul>
+      <li>账号由管理员统一生成，规则为<b>姓名拼音首字母（小写）+ 学号</b>，例如「张小明」学号 <code>08</code> → <code>zxm08</code>。</li>
+      <li>初始密码为随机 8 位，请联系管理员获取。</li>
+      <li><b>首次登录</b>需选择职位并设置新密码：登录后进入选职位界面，选择后在下方设置新密码（至少 6 位）并确认，进入主页。</li>
+      <li>不同职位对应不同权限等级，可在登录时选择，也可由超级管理员在后台调整。</li>
+      <li>职位有名额限制：班长及各科课代表各 2 人，其余职位各 1 人，已被选满的职位不可再选。</li>
+    </ul>
+
+    <h2 id="sec-memo">二、备忘录</h2>
+    <p>从主页点击「备忘录」进入。这是记录/查看每天作业的地方。</p>
+    <ul>
+      <li><b>日期逻辑</b>：每天 8 点前（周末同工作日）打开显示<b>昨天</b>的备忘录；8 点后显示当天空白备忘录。</li>
+      <li>显示内容<b>恰好是昨天</b>时标注「（昨日备忘录）」；更早历史不标注。</li>
+      <li><b>查看历史</b>：用 ‹ › 箭头前后翻，或点日期框选任意一天。</li>
+      <li><b>学科卡片</b>：12 科（语文/数学/英语/物理/化学/生物/地理/政治/历史/艺术/信息/心理）一行三个，单击进入详情。</li>
+      <li><b>编辑</b>：管理员及以上点详情里「编辑」，支持文字颜色、高亮、<code>1.~5.</code> 序号快捷键，保存后实时通知他人刷新。</li>
+      <li><b>作业统计</b>：备忘录页右上「📊 统计」进入统计页，看各科作业量与记录情况。</li>
+      <li><b>今日默认显示</b>：管理员设置当天默认显示的日期时，页面会显示提示。</li>
+    </ul>
+
+    <h2 id="sec-home">三、班级门户（主页）</h2>
+    <ul>
+      <li>打开网站默认进入班级门户：显示<b>班级大标题</b>与各功能入口。</li>
+      <li><b>备忘录</b>：进入备忘录页（见上）。</li>
+      <li><b>用户管理</b>：管理员/超管可见，进入后台（见第六节）。</li>
+      <li><b>我的</b>：个人账号信息、改姓名/密码（见第四节）。</li>
+      <li><b>使用说明 / 更新日志</b>：本文档与版本记录。</li>
+      <li><b>班级公告</b>：主页下方展示全部有效公告；管理员在后台「公告管理」发布。</li>
+    </ul>
+
+    <h2 id="sec-me">四、我的</h2>
+    <ul>
+      <li>主页点「我的」进入，所有人可用。</li>
+      <li>查看自己的账号、学号、职位与角色。</li>
+      <li><b>修改显示姓名</b>：自定义主页/后台显示的姓名（1~20 字）。</li>
+      <li><b>修改密码</b>：输原密码+新密码（至少 6 位）；改后其他设备会自动下线。</li>
+    </ul>
+
+    <h2 id="sec-personal">五、个人小工具</h2>
+    <ul>
+      <li><b>标记完成</b>：备忘录页每科卡片右上角圆圈，做完点一下打 ✓（变绿），再次点击取消；进度条显示当天完成数。仅存你自己的浏览器（按账号区分）。</li>
+      <li><b>倒计时</b>：备忘录页日期下方显示考试/放假倒计时，由管理员后台配置与开关，过期自动隐藏。</li>
+      <li><b>深色模式</b>：右下角 🌙/☀️ 切换，选择会被记住。</li>
+      <li><b>安装到手机桌面</b>：手机浏览器打开后「添加到主屏幕 / 安装应用」，可像 App 一样打开。</li>
+      <li>顶部按当前时间显示问候语（早上好/下午好…）。</li>
+    </ul>
+
+    <h2 id="sec-admin">六、后台管理（管理员/超管）</h2>
+    <p>从主页「用户管理」进入（仅管理员及以上可见）。后台为标签页结构，含：<b>用户管理、公告管理、倒计时、学期设置、默认显示、操作日志</b>。</p>
+    <ul>
+      <li><b>用户管理</b>：查看全班账号/职位/角色/状态。
+        <ul>
+          <li><b>创建用户</b>（仅超管）：账号自动按拼音+学号生成，密码随机 8 位。</li>
+          <li><b>设置权限</b>（仅超管）：指定职位，职位自动决定角色等级。</li>
+          <li><b>重置账号</b>：恢复首次登录前状态并生成新密码（管理员只能重置普通用户，超管可重置所有）。</li>
+        </ul>
+      </li>
+      <li><b>公告管理</b>：发布/删除班级公告（标题+内容+可选过期日期）。</li>
+      <li><b>倒计时</b>：开关主页倒计时卡片并配置条目（名称+日期）。</li>
+      <li><b>学期设置</b>（仅超管）：学年标签/开学日/学年最后一天，驱动学期进度显示。</li>
+      <li><b>默认显示</b>：指定今天主页/备忘录默认显示哪天的备忘录（仅当天有效）。</li>
+      <li><b>操作日志</b>（仅超管）：记录登录、编辑备忘录、用户/公告/倒计时/学期等操作。</li>
+    </ul>
+
+    <h2 id="sec-about">七、关于</h2>
+    <p>版本 <code id="version"></code> · Powered By CBs2N。如有问题请联系班主任或电教委员（超级管理员）。</p>
+    <p><a href="/changelog.html">→ 查看更新日志</a></p>
+  </main>
+
+  <footer class="footer">
+    <div style="display:flex;gap:10px;justify-self:start">
+      <a class="btn-ghost btn" href="/changelog.html">更新日志</a>
+    </div>
+    <div class="power">Powered By CBs2N · <span id="ver"></span></div>
+    <div></div>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script>
+    ensureThemeUI();
+    document.getElementById('version').textContent = App.VERSION;
+    document.getElementById('ver').textContent = App.VERSION;
+  </script>
+</body>
+</html>
