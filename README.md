@@ -128,10 +128,6 @@ node seed.js     # 重新生成账号（跳过已存在）
 
 无构建步骤，直接改 `public/` 与根目录 `*.js` 即可，刷新浏览器生效。
 
-## 📄 License
-
-[MIT](LICENSE)
-
 ---
 
 *Powered By CBs2N · v1.1*
