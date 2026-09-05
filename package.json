@@ -1,6 +1,6 @@
 {
   "name": "class-memo",
-  "version": "v1.1",
+  "version": "v1.2",
   "description": "高一(11)班 在线备忘录 — Powered By CBs2N",
   "main": "server.js",
   "scripts": {

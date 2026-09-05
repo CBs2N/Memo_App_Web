@@ -1,6 +1,6 @@
 // 公共工具：API、提示、日期、学科图标、主题切换
 const App = {
-  VERSION: 'v1.1', // 与后端 config.VERSION 保持一致
+  VERSION: 'v1.2', // 与后端 config.VERSION 保持一致
   WEEK: ['日', '一', '二', '三', '四', '五', '六'],
 };
 

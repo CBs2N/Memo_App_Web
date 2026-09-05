@@ -7,7 +7,7 @@ module.exports = {
   // SQLite 数据库文件路径
   DB_PATH: process.env.DB_PATH || './data/memo.db',
   // 应用版本号（显示在页脚）
-  VERSION: 'v1.1',
+  VERSION: 'v1.2',
   // 每天 8:00 为切换点：8点前显示前一天/上周五，8点后当天
   DAILY_RESET_HOUR: 8,
   // 会话有效期（天）

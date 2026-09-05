@@ -49,8 +49,26 @@
       <div class="term-line" id="termLine" hidden></div>
     </div>
 
-    <!-- 今日默认显示提示条 -->
-    <div class="override-tip" id="overrideTip" hidden></div>
+    <!-- 今日默认显示提示条 + 管理入口 -->
+    <div class="ov-row">
+      <div class="override-tip" id="overrideTip" hidden></div>
+      <button class="btn-ghost btn" id="ovManageBtn" hidden>📌 今日默认显示</button>
+    </div>
+
+    <!-- 今日默认显示管理面板 -->
+    <div class="panel" id="ovPanel" hidden style="margin:0 auto 18px;max-width:560px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <b>📌 今日默认显示管理</b>
+        <button class="modal-close" id="ovClose" title="关闭">×</button>
+      </div>
+      <div class="alert info">设置<b>今天</b>打开网站时默认显示的备忘录日期（仅限今天，第 2 天自动恢复默认规则）。适合提前把某天作业准备好、或临时指定全班看某天内容。</div>
+      <div class="field"><label>今天默认显示的日期</label><input type="date" id="ovDate"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="ovSave" style="flex:1">设为今日默认</button>
+        <button class="btn btn-ghost" id="ovClear" style="flex:1">清除（恢复默认）</button>
+      </div>
+      <div id="ovMsg" style="margin-top:10px"></div>
+    </div>
 
     <!-- 学科卡片网格 -->
     <div class="memo-grid" id="memoGrid"></div>

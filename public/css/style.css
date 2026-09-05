@@ -475,6 +475,11 @@ html[data-theme="dark"] .guide .note { background: #1c2a44; border-color: #2c4a7
 html[data-theme="dark"] .date-label .yesterday,
 html[data-theme="dark"] .date-big .yesterday { -webkit-text-fill-color: #ff7a88; color: #ff7a88; }
 
+/* ========== 今日默认显示管理（备忘录页内） ========== */
+.ov-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.ov-row .override-tip { margin: 0; }
+.ov-row #ovManageBtn { flex-shrink: 0; }
+
 /* ========== 今日默认显示提示条 ========== */
 .override-tip {
   text-align: center; font-size: 14px; font-weight: 700; color: #8a5a00;
@@ -599,6 +604,87 @@ html[data-theme="dark"] .notice-empty { background: rgba(30,37,52,.5); }
   display: flex; align-items: center; gap: 16px; background: #f7f9ff;
   border: 1px solid var(--border); border-radius: 16px; padding: 18px;
 }
+
+/* ========== 课程表 ========== */
+.tt-wrap { max-width: 1040px; }
+.tt-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.tt-head .tabs { margin: 0; }
+
+/* 课表编辑面板：与课表同宽（覆盖 .panel 的窄卡片宽度） */
+.tt-edit-panel { width: 100%; max-width: 1040px; margin: 0 auto 20px; padding: 22px 24px; }
+.tt-edit-row2 { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; flex-wrap: wrap; }
+.tt-edit-row2 input, .tt-edit-row2 select {
+  padding: 8px 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px;
+  background: #fff; color: var(--text);
+}
+.tt-edit-row2 input[type=text] { min-width: 110px; }
+.tt-edit-row2 .e-del { padding: 7px 11px; font-size: 13px; }
+html[data-theme="dark"] .tt-edit-row2 input, html[data-theme="dark"] .tt-edit-row2 select { background: #1c2333; border-color: #35405c; }
+.tt-now {
+  background: rgba(255,255,255,.8); border: 1px solid var(--border); border-radius: 16px;
+  padding: 13px 18px; font-size: 15px; font-weight: 600; margin-bottom: 16px;
+  box-shadow: var(--shadow); animation: fadeUp .3s ease both;
+}
+.tt-now.active {
+  background: linear-gradient(120deg, #fff6e0, #fff);
+  border-color: #f0d48a; color: #8a5a00;
+}
+html[data-theme="dark"] .tt-now { background: rgba(30,37,52,.9); }
+html[data-theme="dark"] .tt-now.active { background: #3a2f14; color: #ffd77a; border-color: #6b551f; }
+
+/* 今日时间轴 */
+.tt-row {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 10px 14px; margin-bottom: 8px; box-shadow: var(--shadow);
+  animation: cardIn .3s ease both; position: relative;
+}
+.tt-row.lesson { border-left: 4px solid var(--lc, var(--primary)); }
+.tt-row.lesson .tt-name { font-weight: 800; font-size: 16px; color: var(--lc, var(--text)); }
+.tt-row .tt-time { font-size: 13px; font-weight: 700; color: var(--muted); width: 44px; flex-shrink: 0; }
+.tt-row .tt-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lc, var(--primary)); flex-shrink: 0; }
+.tt-row .tt-name { flex: 1; font-size: 14px; }
+.tt-row .tt-name.muted { color: var(--muted); font-weight: 500; font-size: 13px; }
+.tt-row .tt-range { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+.tt-row.past { opacity: .45; }
+.tt-row.now {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(231,76,94,.15), var(--shadow);
+  transform: translateX(4px);
+}
+.tt-row.now::after {
+  content: "现在"; position: absolute; right: 14px; top: -9px;
+  background: var(--danger); color: #fff; font-size: 11px; font-weight: 700;
+  padding: 1px 10px; border-radius: 10px;
+}
+.tt-row.now .tt-range { visibility: hidden; }
+.tt-row.break { padding: 5px 14px; box-shadow: none; background: transparent; border: none; }
+.tt-row.break .tt-time { visibility: hidden; width: 0; }
+
+/* 全周表 */
+.tt-grid { width: 100%; border-collapse: separate; border-spacing: 6px; font-size: 15px; }
+.tt-grid th {
+  background: #f2f5fc; color: var(--muted); font-weight: 700; padding: 11px 6px;
+  border-radius: 9px; font-size: 14px;
+}
+.tt-grid th.today-col { background: linear-gradient(120deg, var(--primary), var(--primary-deep)); color: #fff; }
+html[data-theme="dark"] .tt-grid th { background: #232c40; }
+.tt-grid .tt-time-cell {
+  background: var(--card); color: var(--muted); font-size: 12px; font-weight: 700;
+  text-align: center; padding: 8px 6px; border-radius: 9px; line-height: 1.5; width: 64px;
+}
+.tt-grid .tt-time-cell span { opacity: .7; font-weight: 500; }
+.tt-cell {
+  background: var(--card); border-radius: 9px; text-align: center; padding: 13px 6px;
+  font-weight: 700; border-left: 4px solid var(--lc, var(--border));
+  box-shadow: var(--shadow); animation: cardIn .35s ease both;
+}
+.tt-cell span { color: var(--lc, var(--text)); }
+.tt-cell.muted-cell { border-left-color: var(--border); }
+.tt-cell.muted-cell span { color: var(--muted); font-weight: 500; font-size: 12px; }
+.tt-cell.empty { background: transparent; box-shadow: none; border: none; }
+.tt-cell.today-col { outline: 2px solid rgba(91,124,250,.25); }
+.tt-samerow .tt-cell { color: var(--muted); }
 .me-avatar {
   width: 64px; height: 64px; border-radius: 50%; font-size: 30px; font-weight: 800;
   background: linear-gradient(120deg, var(--primary), #8f6ff0); color: #fff;

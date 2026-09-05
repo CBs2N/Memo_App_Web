@@ -59,7 +59,49 @@
     const { user } = await api('/api/me');
     state.user = user;
     renderAuth();
+    // 管理员及以上：显示"今日默认显示"管理入口
+    const ovBtn = document.getElementById('ovManageBtn');
+    if (ovBtn) ovBtn.hidden = !(user && (user.roleLevel || 0) >= 1);
     renderGrid(); // 打勾状态可能随登录变化
+  }
+
+  // ---------- 今日默认显示管理 ----------
+  async function openOvPanel() {
+    document.getElementById('ovPanel').hidden = false;
+    const msg = document.getElementById('ovMsg');
+    try {
+      const r = await api('/api/override');
+      const dateInput = document.getElementById('ovDate');
+      if (r.active && r.overrideMemoDate) {
+        dateInput.value = r.overrideMemoDate;
+        msg.innerHTML = `<div class="alert info">当前已设置：今天默认显示 <b>${escapeText(r.overrideMemoDate)}</b>（仅今日有效）</div>`;
+      } else {
+        dateInput.value = '';
+        msg.innerHTML = '<div class="alert info">当前未设置，按默认规则显示（8 点前昨天 / 8 点后今天）。</div>';
+      }
+    } catch (e) { msg.innerHTML = `<div class="alert">${escapeText(e.message)}</div>`; }
+  }
+  function closeOvPanel() { document.getElementById('ovPanel').hidden = true; }
+  async function saveOverrideMemo() {
+    const date = document.getElementById('ovDate').value;
+    const msg = document.getElementById('ovMsg');
+    if (!date) { msg.innerHTML = '<div class="alert">请先选择日期</div>'; return; }
+    try {
+      await api('/api/override', { method: 'PUT', body: JSON.stringify({ date }) });
+      msg.innerHTML = `<div class="alert info">✓ 已设置：今天默认显示 <b>${escapeText(date)}</b>，第 2 天自动恢复默认。</div>`;
+      toast('已设为今日默认显示');
+      await loadMemo();
+    } catch (e) { msg.innerHTML = `<div class="alert">${escapeText(e.message)}</div>`; }
+  }
+  async function clearOverrideMemo() {
+    if (!confirm('确定清除今日默认显示设置吗？将恢复默认规则（8 点前昨天 / 8 点后今天）。')) return;
+    try {
+      await api('/api/override', { method: 'PUT', body: JSON.stringify({ date: null }) });
+      document.getElementById('ovDate').value = '';
+      document.getElementById('ovMsg').innerHTML = '<div class="alert info">已清除，恢复默认规则。</div>';
+      toast('已清除今日默认显示');
+      await loadMemo();
+    } catch (e) { toast(e.message); }
   }
 
   function renderAuth() {
@@ -289,6 +331,16 @@
     document.getElementById('prevDay').onclick = () => shiftDay(-1);
     document.getElementById('nextDay').onclick = () => shiftDay(1);
     document.getElementById('backTodayBtn').onclick = async () => { await loadMemo(state.todayDate); };
+
+    // 今日默认显示管理面板
+    const ovBtn = document.getElementById('ovManageBtn');
+    if (ovBtn) ovBtn.onclick = openOvPanel;
+    const ovClose = document.getElementById('ovClose');
+    if (ovClose) ovClose.onclick = closeOvPanel;
+    const ovSave = document.getElementById('ovSave');
+    if (ovSave) ovSave.onclick = saveOverrideMemo;
+    const ovClear = document.getElementById('ovClear');
+    if (ovClear) ovClear.onclick = clearOverrideMemo;
   }
 
   init();

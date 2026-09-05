@@ -29,7 +29,6 @@
       <button class="tab" data-tab="notice" id="tabNoticeBtn">公告管理</button>
       <button class="tab" data-tab="countdown" id="tabCountdownBtn">倒计时</button>
       <button class="tab" data-tab="term" id="tabTermBtn">学期设置</button>
-      <button class="tab" data-tab="override" id="tabOverrideBtn">默认显示</button>
       <button class="tab" data-tab="logs" id="tabLogsBtn">操作日志</button>
     </div>
 
@@ -101,23 +100,6 @@
         <button class="btn btn-ghost" id="cdAdd" style="width:100%;margin-bottom:10px">＋ 添加一项</button>
         <button class="btn-primary btn" id="cdSave" style="width:100%">保存倒计时</button>
         <div id="cdMsg" style="margin-top:12px"></div>
-      </div>
-    </div>
-
-    <!-- 今日默认显示 -->
-    <div class="tab-pane" id="pane-override" hidden>
-      <div class="section-title" style="margin-bottom:16px">今日默认显示</div>
-      <div class="panel narrow">
-        <div class="alert info">设置<b>今天</b>打开网站时默认显示的备忘录日期（仅限今天，第 2 天自动恢复默认规则）。适合提前把某天作业准备好、或临时指定全班看某天内容。</div>
-        <div class="field">
-          <label>今天默认显示的日期</label>
-          <input type="date" id="overrideDate">
-        </div>
-        <div class="field" style="margin-top:8px">
-          <button class="btn-primary btn" id="overrideSave" style="width:100%">设为今日默认</button>
-          <button class="btn-ghost btn" id="overrideClear" style="width:100%;margin-top:8px">清除设置（恢复默认规则）</button>
-        </div>
-        <div id="overrideMsg" style="margin-top:12px"></div>
       </div>
     </div>
 

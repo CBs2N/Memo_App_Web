@@ -27,16 +27,14 @@ let me = null;
       document.getElementById('tabTermBtn').hidden = true;
       document.getElementById('tabLogsBtn').hidden = true;
     }
-    await loadOverride();
     await loadNoticeAdmin();
     await loadCountdownPanel();
 
     await loadUsers();
     bindEvents();
 
-    // 支持从主页 #term/#override 锚点直达
+    // 支持从主页 #term 锚点直达
     if (location.hash === '#term') switchTab('term');
-    else if (location.hash === '#override') switchTab('override');
   } catch (e) {
     location.href = '/login.html';
   }
@@ -57,7 +55,7 @@ function bindTabs() {
 }
 function switchTab(name) {
   document.querySelectorAll('#adminTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-  ['users', 'notice', 'countdown', 'term', 'override', 'logs'].forEach(p => {
+  ['users', 'notice', 'countdown', 'term', 'logs'].forEach(p => {
     document.getElementById('pane-' + p).hidden = (p !== name);
   });
 }
@@ -145,45 +143,6 @@ async function saveCountdown() {
   } catch (e) {
     document.getElementById('cdMsg').innerHTML = `<div class="alert">${escapeText(e.message)}</div>`;
   }
-}
-
-// ---------- 今日默认显示 ----------
-async function loadOverride() {
-  try {
-    const r = await api('/api/override');
-    const dateInput = document.getElementById('overrideDate');
-    const msg = document.getElementById('overrideMsg');
-    if (r.active && r.overrideMemoDate) {
-      dateInput.value = r.overrideMemoDate;
-      msg.innerHTML = `<div class="alert info">当前已设置：今天默认显示 <b>${escapeText(r.overrideMemoDate)}</b>（仅今日有效）</div>`;
-    } else {
-      dateInput.value = '';
-      msg.innerHTML = '<div class="alert info">当前未设置，按默认规则显示（8 点前昨天 / 8 点后今天）。</div>';
-    }
-  } catch (e) { toast(e.message); }
-}
-async function saveOverride() {
-  const date = document.getElementById('overrideDate').value;
-  const msg = document.getElementById('overrideMsg');
-  msg.innerHTML = '';
-  if (!date) { msg.innerHTML = '<div class="alert">请先选择日期</div>'; return; }
-  try {
-    await api('/api/override', { method: 'PUT', body: JSON.stringify({ date }) });
-    msg.innerHTML = `<div class="alert info">✓ 已设置：今天默认显示 <b>${escapeText(date)}</b>，第 2 天自动恢复默认。</div>`;
-    toast('已设为今日默认显示');
-    if (me.roleLevel >= 2) await loadLogs();
-  } catch (e) { msg.innerHTML = `<div class="alert">${escapeText(e.message)}</div>`; }
-}
-async function clearOverride() {
-  if (!confirm('确定清除今日默认显示设置吗？将恢复默认规则（8 点前昨天 / 8 点后今天）。')) return;
-  try {
-    await api('/api/override', { method: 'PUT', body: JSON.stringify({ date: null }) });
-    document.getElementById('overrideDate').value = '';
-    const msg = document.getElementById('overrideMsg');
-    msg.innerHTML = '<div class="alert info">已清除，恢复默认规则。</div>';
-    toast('已清除今日默认显示');
-    if (me.roleLevel >= 2) await loadLogs();
-  } catch (e) { toast(e.message); }
 }
 
 // ---------- 用户列表 ----------
@@ -348,9 +307,6 @@ function bindEvents() {
   document.getElementById('roleSubmit').onclick = submitRole;
 
   document.getElementById('termSave').onclick = saveTerm;
-
-  document.getElementById('overrideSave').onclick = saveOverride;
-  document.getElementById('overrideClear').onclick = clearOverride;
 
   document.getElementById('noticePublish').onclick = publishNotice;
   document.getElementById('cdAdd').onclick = () => {

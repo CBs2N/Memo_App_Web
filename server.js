@@ -275,6 +275,46 @@ app.get('/api/stats', (req, res) => {
   res.json({ range: { days, from: fromDate, to: today }, stats: Object.values(rows) });
 });
 
+/* ---------------- 课程表 ---------------- */
+// 读取课表（所有人可看）：返回自定义课表，未设置时为 null（前端用内置默认）
+app.get('/api/timetable', (req, res) => {
+  res.json({ timetable: store.getSettings().timetable || null });
+});
+// 保存课表（管理员及以上）：{ timetable: {1..5: [[起,止,名称,类型],...]} }；timetable:null 恢复默认
+app.put('/api/timetable', requireLevel(1), (req, res) => {
+  const tt = (req.body || {}).timetable;
+  if (tt === null || tt === undefined) {
+    store.updateSettings({ timetable: null });
+    auth.log(req.user.username, 'set_timetable', '', '恢复默认课表');
+    broadcast({ type: 'timetable' });
+    return res.json({ ok: true });
+  }
+  if (typeof tt !== 'object' || Array.isArray(tt)) return res.status(400).json({ error: '课表格式错误' });
+  const TYPES = ['lesson', 'break', 'noon', 'activity'];
+  const out = {};
+  for (const key of Object.keys(tt)) {
+    const d = Number(key);
+    if (!(d >= 1 && d <= 5)) return res.status(400).json({ error: '星期无效（仅 1~5）' });
+    if (!Array.isArray(tt[key])) return res.status(400).json({ error: `周${d} 数据格式错误` });
+    if (tt[key].length > 80) return res.status(400).json({ error: `周${d} 时段过多` });
+    const rows = [];
+    for (const r of tt[key]) {
+      if (!Array.isArray(r) || r.length < 4) return res.status(400).json({ error: '时段格式错误' });
+      const [s, e, name, type] = [String(r[0]), String(r[1]), String(r[2] || ''), String(r[3])];
+      if (!/^\d{2}:\d{2}$/.test(s) || !/^\d{2}:\d{2}$/.test(e)) return res.status(400).json({ error: '时间格式应为 HH:MM' });
+      if (s >= e) return res.status(400).json({ error: `开始时间需早于结束时间（${name || s}）` });
+      if (!name.trim() || name.trim().length > 30) return res.status(400).json({ error: '名称需为 1~30 字' });
+      if (!TYPES.includes(type)) return res.status(400).json({ error: '类型无效' });
+      rows.push([s, e, name.trim(), type]);
+    }
+    out[d] = rows;
+  }
+  store.updateSettings({ timetable: out });
+  auth.log(req.user.username, 'set_timetable', '', `days=${Object.keys(out).length}`);
+  broadcast({ type: 'timetable' });
+  res.json({ ok: true });
+});
+
 /* ---------------- 收支·赞助 ---------------- */
 // 收支记录（所有人可看）
 app.get('/api/finance', (req, res) => {

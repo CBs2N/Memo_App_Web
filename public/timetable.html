@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>课程表</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%93%EF%B8%8F%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#5b7cfa">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>try{if(localStorage.getItem('cb2n-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <header class="header">
+    <div class="brand"><a href="/" style="color:inherit">← 返回主页</a></div>
+    <div class="title" style="font-size:18px">课程表</div>
+    <div class="auth-area"></div>
+  </header>
+
+  <main class="main tt-wrap">
+    <!-- 视图切换 + 编辑按钮 -->
+    <div class="tt-head">
+      <div class="tabs" id="ttTabs">
+        <button class="tab active" data-view="today">今日</button>
+        <button class="tab" data-view="week">全周</button>
+      </div>
+      <button class="btn btn-ghost" id="editBtn" hidden>✏️ 编辑课表</button>
+    </div>
+
+    <!-- 编辑面板（管理员及以上） -->
+    <div class="panel tt-edit-panel" id="editPanel" hidden>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px">
+        <b style="font-size:15px">选择星期：</b>
+        <div class="tabs" id="editDayTabs" style="margin:0"></div>
+      </div>
+      <div class="alert info" style="margin-bottom:12px">编辑该天的时间段：时间、名称、类型都可改；✕ 删除该行。保存后立即对所有人生效。</div>
+      <div id="editRows"></div>
+      <button class="btn btn-ghost" id="editAddRow" style="width:100%;margin-top:6px">＋ 添加时段</button>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="editSave" style="flex:1">保存课表</button>
+        <button class="btn btn-ghost" id="editCancel" style="flex:1">取消</button>
+        <button class="btn btn-danger" id="editReset">恢复默认</button>
+      </div>
+      <div id="editMsg" style="margin-top:10px"></div>
+    </div>
+
+    <!-- 今日视图 -->
+    <div id="todayView">
+      <div class="tt-now" id="ttNow" hidden></div>
+      <div id="ttTodayList"></div>
+    </div>
+
+    <!-- 全周视图 -->
+    <div id="weekView" hidden>
+      <div style="overflow:auto">
+        <table class="tt-grid" id="ttGrid"></table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div></div>
+    <div class="power">Powered By CBs2N · <span id="version"></span></div>
+    <div></div>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/timetable.js"></script>
+</body>
+</html>
